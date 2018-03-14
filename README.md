@@ -23,4 +23,6 @@ services.ForInterfacesMatching("^IRepository")
 //and so on...
 ```
 
+SharpDiAutoRegister **will not** override a pre-registered interface, so if you want a custom behavior for some of them, just register them **before** calling SharpDiAutoRegister methods.
+
 Happy coding!
