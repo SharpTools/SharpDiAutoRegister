@@ -48,20 +48,12 @@ namespace Microsoft.Extensions.DependencyInjection {
                 if (_serviceCollection.Any(s => s.ServiceType == @interface)) {
                     continue;
                 }
-                var impl = Assemblies.SelectMany(a => a.GetTypes())
-                                     .FirstOrDefault(t => @interface.IsAssignableFrom(t) && !t.IsInterface);
+                var impl = Assemblies.SelectMany(p => p.GetTypes())
+                                     .FirstOrDefault(t => @interface.IsAssignableFrom(t)
+                                                          && !t.IsInterface && !t.IsAbstract);
+
                 if (impl != null) {
-                    switch(ServiceLifetime) {
-                        case ServiceLifetime.Singleton:
-                            _serviceCollection.AddSingleton(@interface, impl);
-                            break;
-                        case ServiceLifetime.Transient:
-                            _serviceCollection.AddTransient(@interface, impl);
-                            break;
-                        case ServiceLifetime.Scoped:
-                            _serviceCollection.AddScoped(@interface, impl);
-                            break;
-                    }
+                    _serviceCollection.Add(new ServiceDescriptor(@interface, impl, ServiceLifetime));
                 }
             }
         }
