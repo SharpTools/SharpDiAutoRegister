@@ -7,4 +7,8 @@
 
     public class MapperIntString : IMapper<int, string> { }
     public class MapperIntDecimal : IMapper<int, decimal> { }
+
+    public class Same : IFeature1, IFeature2 { }
+    public interface IFeature1 { }
+    public interface IFeature2 { }
 }

@@ -10,6 +10,7 @@
     <PackageIconUrl></PackageIconUrl>
     <PackageLicenseUrl>https://github.com/SharpTools/SharpDiAutoRegister/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/SharpTools/SharpDiAutoRegister.git</RepositoryUrl>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

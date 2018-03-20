@@ -12,12 +12,26 @@ namespace SharpDiAutoRegister.Tests {
 
         [Fact]
         public void Should_work_for_simple_interface() {
-            _serviceCollection.ForInterfacesMatching("^IF")
+            _serviceCollection.ForInterfacesMatching("^IFo")
                               .OfAssemblies(Assembly.GetExecutingAssembly())
                               .AddSingletons();
             var sp = _serviceCollection.BuildServiceProvider();
             var foo = sp.GetService<IFoo>();
             Assert.IsType<Foo>(foo);
+        }
+
+        [Fact]
+        public void Should_reuse_provided_concrete_objects() {
+            _serviceCollection.ForInterfacesMatching("^IFeature")
+                              .OfAssemblies(Assembly.GetExecutingAssembly())
+                              .UseWhenPossible(new Same())
+                              .AddSingletons();
+            var sp = _serviceCollection.BuildServiceProvider();
+
+            var foo1 = sp.GetService<IFeature1>();
+            var foo2 = sp.GetService<IFeature2>();
+            Assert.IsType<Same>(foo1);
+            Assert.Same(foo1, foo2);
         }
 
         [Fact]
